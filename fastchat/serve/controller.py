@@ -223,7 +223,7 @@ class Controller:
                 worker_addr + "/worker_generate_stream",
                 json=params,
                 stream=True,
-                timeout=15,
+                timeout=30,
             )
             for chunk in response.iter_lines(decode_unicode=False, delimiter=b"\0"):
                 if chunk:
