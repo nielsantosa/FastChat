@@ -1,0 +1,15 @@
+FROM python:3.11.3-bullseye
+
+ENV VIRTUAL_ENV=/opt/venv
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+# Install dependencies:
+COPY requirements.txt .
+RUN pip3 install --no-cache-dir wheel==0.38.4 pip==22.3.1 && \
+    pip3 install --no-cache-dir -r /requirements.txt && \
+    pip3 install torch==2.0.1 --index-url https://download.pytorch.org/whl/cpu
+
+# Run the application:
+COPY app.py .
+CMD ["python3", "app.py"]
