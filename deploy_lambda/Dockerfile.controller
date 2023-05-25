@@ -12,4 +12,4 @@ RUN pip3 install --no-cache-dir wheel==0.38.4 pip==22.3.1 && \
 # Run the application:
 ENV PYTHONPATH=/
 COPY . /
-CMD ["python3", "fastchat/serve/backend_nat.py"]
+CMD ["python3", "fastchat/serve/controller.py"]

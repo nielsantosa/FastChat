@@ -55,6 +55,7 @@ def build_logger(logger_name, logger_filename):
     logger.setLevel(logging.INFO)
 
     # Add a file handler for all loggers
+    """ # Disable create log file temporarily
     if handler is None:
         os.makedirs(LOGDIR, exist_ok=True)
         filename = os.path.join(LOGDIR, logger_filename)
@@ -66,6 +67,7 @@ def build_logger(logger_name, logger_filename):
         for name, item in logging.root.manager.loggerDict.items():
             if isinstance(item, logging.Logger):
                 item.addHandler(handler)
+                """
 
     return logger
 
