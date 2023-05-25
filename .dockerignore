@@ -1,3 +1,7 @@
 .pylintrc
 tests/*
 assets/*
+output_model/*
+.pylintrc
+tests/*
+assets/*

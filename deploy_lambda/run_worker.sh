@@ -1,3 +1,5 @@
+#!/bin/bash
+
 NVIDIA_SMI=$(nvidia-smi)
 if [ "command not found" == *"$NVIDIA_SMI"* ];
 then
