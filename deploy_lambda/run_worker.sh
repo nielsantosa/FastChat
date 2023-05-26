@@ -1,5 +1,11 @@
 #!/bin/bash
 
+python3 fastchat/model/apply_delta.py \
+    --base-model-path decapoda-research/llama-13b-hf \
+    --target-model-path /output_model \
+    --delta-path lmsys/vicuna-13b-delta-v1.1 && \
+    rm -rf /.cache/huggingface
+
 NVIDIA_SMI=$(nvidia-smi)
 if [ "command not found" == *"$NVIDIA_SMI"* ];
 then

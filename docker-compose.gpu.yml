@@ -1,0 +1,43 @@
+services:
+  controller:
+    #build:
+    #  context: .
+    #  dockerfile: deploy_lambda/Dockerfile.controller
+    image: nielsantosa/fastchat_controller:v1
+    restart: always
+    ports:
+      - 21001:21001
+  model_worker:
+    #build:
+    #  context: .
+    #  dockerfile: deploy_lambda/Dockerfile.worker
+    image: nielsantosa/fastchat_worker:v1
+    restart: always
+    ports:
+      - 21002:21002
+    environment:
+      - CONTROLLER_ADDRESS=http://controller:21001
+      - WORKER_ADDRESS=http://model_worker:21002
+    depends_on:
+      controller:
+        condition: service_started
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+  backend_nat:
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile.backend
+    image: nielsantosa/fastchat_backend:v1
+    restart: always
+    ports:
+      - 21010:21010
+    environment:
+      - CONTROLLER_ADDRESS=http://controller:21001
+    depends_on:
+      model_worker:
+        condition: service_started
