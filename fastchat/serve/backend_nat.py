@@ -1,8 +1,9 @@
 import argparse
 import json
 import requests
+import os
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, Depends
 from fastapi.responses import JSONResponse, StreamingResponse
 from starlette.background import BackgroundTask
 
@@ -13,6 +14,10 @@ from fastchat.model.model_adapter import get_conversation_template
 
 model_name = "output_model" # default
 app = FastAPI()
+
+class Logic:
+    def __init__(self, options):
+        self.options = options
 
 
 @app.post("/v1/chat/completions")
@@ -32,12 +37,13 @@ async def api_get_chat_completions(request: Request):
     messages = body.get("messages")
     temperature = body.get("temperature", 0.0)
     if not isinstance(temperature, (float, int)) and temperature <= 0.0 or temperature > 1:
-        return JSONResponse(content="Temperature must be min 0.1 and max 1", status=400)
+        return JSONResponse(content="Temperature must be min 0.0 and max 1", status=400)
 
     max_new_tokens = body.get("max_new_tokens", 32)
 
     # process conv
-    conv = get_conversation_template(model_name)
+    #conv = get_conversation_template(model_name)
+    conv = get_conversation_template("vicuna-13b")
     for message in messages:
         if message.get("role") == "system":
             conv.system = message.get("content")
@@ -52,7 +58,8 @@ async def api_get_chat_completions(request: Request):
 
     # call and stream
     client = AsyncClient()
-    url = "http://localhost:21001/worker_generate_stream"
+    #url = "http://localhost:21001/worker_generate_stream"
+    url = f"{logic.options.controller_address}/worker_generate_stream"
 
     gen_params = {
         "model": model_name,
@@ -87,11 +94,13 @@ async def api_get_chat_completions(request: Request):
                 printed_output = output[len(output_memory):]
                 output_memory = output
 
+                """
                 for letter in printed_output:
                     time.sleep(0.2)
                     yield letter.encode()
+                    """
 
-                #yield printed_output.encode()
+                yield printed_output.encode()
 
     print("Sending request and stream to worker")
     r = await client.send(req, stream=True)
@@ -124,7 +133,10 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--host", type=str, default="0.0.0.0")
     parser.add_argument("--port", type=str, default=21010)
+    parser.add_argument("--controller-address", type=str, default=os.environ.get("CONTROLLER_ADDRESS") or "http://localhost:21001")
 
     args = parser.parse_args()
+    logic = Logic(args)
 
-    uvicorn.run("backend_nat:app", host=args.host, port=args.port, log_level="info", reload=True)
+    #uvicorn.run("backend_nat:app", host=args.host, port=args.port, log_level="info", reload=True)
+    uvicorn.run(app, host=args.host, port=args.port, log_level="info")

@@ -1,0 +1,23 @@
+services:
+  controller:
+    build:
+      context: .
+      dockerfile: deploy_lambda/Dockerfile.controller
+    image: nielsantosa/fastchat_controller
+    restart: always
+    ports:
+      - 21001:21001
+  model_worker:
+    build:
+      context: .
+      dockerfile: deploy_lambda/Dockerfile.worker
+    image: nielsantosa/fastchat_worker
+    restart: always
+    ports:
+      - 21002:21002
+    environment:
+      - CONTROLLER_ADDRESS="http://controller"
+      - WORKER_ADDRESS="http://model_worker"
+    depends_on:
+      controller:
+        condition: service_started

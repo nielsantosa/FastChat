@@ -356,9 +356,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--host", type=str, default="0.0.0.0")
     parser.add_argument("--port", type=int, default=21002)
-    parser.add_argument("--worker-address", type=str, default="http://localhost:21002")
+    parser.add_argument("--worker-address", type=str, default=os.environ.get("WORKER_ADDRESS") or "http://localhost:21002")
     parser.add_argument(
-        "--controller-address", type=str, default="http://localhost:21001"
+        "--controller-address", type=str, default=os.environ.get("CONTROLLER_ADDRESS") or "http://localhost:21001"
     )
     add_model_args(parser)
     parser.add_argument("--model-name", type=str, help="Optional display name")

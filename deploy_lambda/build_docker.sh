@@ -35,9 +35,9 @@ DOCKER_IMAGE_WORKER="nielsantosa/fastchat_worker:v1"
 NVIDIA_SMI=$(nvidia-smi)
 if [ "command not found" == *"$NVIDIA_SMI"* ];
 then
-  # for cuda enabled
-  docker run --gpus 1 --restart unless-stopped -p 21002:21002 -d --name fastchat_worker $DOCKER_IMAGE_WORKER;
+  # for non cuda enabled aka cpu only
+  sudo docker run --restart unless-stopped -p 21002:21002 -d --name fastchat_worker $DOCKER_IMAGE_WORKER;
 else
-  # for non gpu aka cpu only
-  docker run --restart unless-stopped -p 21002:21002 -d --name fastchat_worker $DOCKER_IMAGE_WORKER;
+  # for gpu cuda enabled
+  sudo docker run --gpus 1 --restart unless-stopped -p 21002:21002 -d --name fastchat_worker $DOCKER_IMAGE_WORKER;
 fi
