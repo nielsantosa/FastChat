@@ -136,6 +136,7 @@ if __name__ == "__main__":
     parser.add_argument("--controller-address", type=str, default=os.environ.get("CONTROLLER_ADDRESS") or "http://localhost:21001")
 
     args = parser.parse_args()
+    logging.info(f"Controller address: {args.controller_address}")
     logic = Logic(args)
 
     #uvicorn.run("backend_nat:app", host=args.host, port=args.port, log_level="info", reload=True)

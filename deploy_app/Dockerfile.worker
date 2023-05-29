@@ -14,4 +14,4 @@ ENV PYTHONPATH=/
 COPY . /
 
 # Run the application:
-ENTRYPOINT ["/deploy_lambda/run_worker.sh"]
+ENTRYPOINT ["/deploy_app/run_worker.sh"]

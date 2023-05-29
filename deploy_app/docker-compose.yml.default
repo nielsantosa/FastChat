@@ -2,7 +2,7 @@ services:
   controller:
     build:
       context: .
-      dockerfile: deploy_lambda/Dockerfile.controller
+      dockerfile: deploy_app/Dockerfile.controller
     image: nielsantosa/fastchat_controller
     restart: always
     ports:
@@ -10,7 +10,7 @@ services:
   model_worker:
     build:
       context: .
-      dockerfile: deploy_lambda/Dockerfile.worker
+      dockerfile: deploy_app/Dockerfile.worker
     image: nielsantosa/fastchat_worker
     restart: always
     ports:
@@ -24,7 +24,7 @@ services:
   backend_nat:
     build:
       context: .
-      dockerfile: Dockerfile.backend_nat
+      dockerfile: deploy_app/Dockerfile.backend_nat
     image: nielsantosa/fastchat_backend_nat
     restart: always
     ports:
