@@ -5,13 +5,21 @@ FastChat is an open platform for training, serving, and evaluating large languag
 - The weights, training code, and evaluation code for state-of-the-art models (e.g., Vicuna, FastChat-T5).
 - A distributed multi-model serving system with Web UI and OpenAI-compatible RESTful APIs.
 
-## 99 USAGE ONLY
-For 99 Only setting up, usage,
-Read the README.md on deploy_lambda/ for more information.
-Read the README.md on deploy_nginx/ for more information.
-Read the README.md on deploy_app/ for more information.
+## 99 USAGE ONLY, FastChat mounted on LambdaLabs instances
+We are using LambdaLabs GPU Cloud to mount the LLM. https://lambdalabs.com/service/gpu-cloud#pricing
+The usage of GPU is required, as the LLM requires a lot of RAM (if running on CPU) or GPU to run fast and smoothly. (Vicuna-13b requires 28GB of GPU Memory)
 
-The rest are Origin FastChat manuals.
+This Repo is based on original lymsys/FastChat Repo that is forked to enable custom usage.
+The version of original repo are fixed to avoid further complications during the version update.
+We are mainly using the fastchat/serve/ folder to run the Backend for Inference only.
+
+For Setting up and usage,
+deploy_lambda/ -> Initiation and Setting up of Lambda Instance (and Dev Ops of the application)
+deploy_app/ -> Initiation and Setting up of Applications Docker
+deploy_nginx/ -> Initiation and Setting up of Nginx (to forward HTTP Request to the Application backend)
+Read the README.md on each folder for more information.
+
+The rest of this documentation are regarding to origin FastChat manuals.
 
 ## News
 - [2023/05] 🔥 We introduced **Chatbot Arena** for battles among LLMs. Check out the blog [post](https://lmsys.org/blog/2023-05-03-arena) and [demo](https://arena.lmsys.org).
