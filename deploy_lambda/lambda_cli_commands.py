@@ -31,7 +31,7 @@ class Script():
 
         return res.json()
 
-    def _check_running_lambda_instances(self):
+    def _get_running_lambda_instances(self):
         URL = "https://cloud.lambdalabs.com/api/v1/instances"
 
         res = requests.get(URL, auth=(self.api_key, ""))
@@ -40,6 +40,10 @@ class Script():
             return
 
         return res.json()
+
+    def _check_running_lambda_instances(self):
+        res = self._get_running_lambda_instances()
+        print(res)
 
     def _terminate_lambda_instances(self) -> None:
         instance_ids = self.options.INSTANCE_IDS
@@ -141,6 +145,10 @@ class Script():
             self._terminate_lambda_instances()
             return
 
+        if self.options.check_running_lambda_instances == "True":
+            self._check_running_lambda_instances()
+            return
+
         logging.info("Terminating script...")
 
 
@@ -159,6 +167,7 @@ def main():
     # Process Options
     parser.add_argument("--launch_lambda_instances", type=str, choices=["True", "False"], help="Bool value to launch lambda instances")
     parser.add_argument("--terminate_lambda_instances", type=str, choices=["True", "False"], help="Bool value to terminate lambda instances")
+    parser.add_argument("--check_running_lambda_instances", type=str, choices=["True", "False"], help="Bool value to get running lambda instances")
 
     # General Options
     parser.add_argument("--LAMBDALABS_API_KEY", default=os.environ.get("LAMBDALABS_API_KEY"), help="Get from Cloud API")
