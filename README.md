@@ -5,6 +5,14 @@ FastChat is an open platform for training, serving, and evaluating large languag
 - The weights, training code, and evaluation code for state-of-the-art models (e.g., Vicuna, FastChat-T5).
 - A distributed multi-model serving system with Web UI and OpenAI-compatible RESTful APIs.
 
+## 99 USAGE ONLY
+For 99 Only setting up, usage,
+Read the README.md on deploy_lambda/ for more information.
+Read the README.md on deploy_nginx/ for more information.
+Read the README.md on deploy_app/ for more information.
+
+The rest are Origin FastChat manuals.
+
 ## News
 - [2023/05] 🔥 We introduced **Chatbot Arena** for battles among LLMs. Check out the blog [post](https://lmsys.org/blog/2023-05-03-arena) and [demo](https://arena.lmsys.org).
 - [2023/04] We released **FastChat-T5** compatible with commercial usage. Check out the [weights](#fastchat-t5) and [demo](https://chat.lmsys.org).
