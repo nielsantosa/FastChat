@@ -1,8 +1,10 @@
 # Deploy Lambda Instance through Lambda CLI
 
 ```
+export LAMBDALABS_API_KEY=<YOUR TOKEN>
 bash init_lambda_instance.py
 ```
+Token can be generated using Lambda Clouds.
 It will run the script from lambda_cli_commands.py.
 Kindly ensure that you are starting or terminating properly.
 NOTE!

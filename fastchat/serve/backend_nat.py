@@ -2,6 +2,7 @@ import argparse
 import json
 import requests
 import os
+import logging
 
 from fastapi import FastAPI, Request, Depends
 from fastapi.responses import JSONResponse, StreamingResponse

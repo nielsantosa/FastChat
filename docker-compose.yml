@@ -1,9 +1,9 @@
 services:
   controller:
-    build:
-      context: .
-      dockerfile: deploy_app/Dockerfile.controller
-        #image: nielsantosa/fastchat_controller
+    #build:
+    #  context: .
+    #  dockerfile: deploy_app/Dockerfile.controller
+    image: nielsantosa/fastchat_controller:v1
     restart: always
     ports:
       - 21001:21001
@@ -22,10 +22,10 @@ services:
       controller:
         condition: service_started
   backend_nat:
-    build:
-      context: .
-      dockerfile: deploy_app/Dockerfile.backend_nat
-        #image: nielsantosa/fastchat_backend_nat
+    #build:
+    #  context: .
+    #  dockerfile: deploy_app/Dockerfile.backend_nat
+    image: nielsantosa/fastchat_backend:v1
     restart: always
     ports:
       - 21010:21010
